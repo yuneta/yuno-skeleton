@@ -1,0 +1,85 @@
+/***********************************************************************
+ *          Main yuno __yuno__
+ *
+ *          Create the Yuno __yuno__
+ *          Create the default service __default_service__
+ *
+ *          Copyright (c) {{__year__}} {{author}}.
+ *          All Rights Reserved.
+ ***********************************************************************/
+(function(exports) {
+    'use strict';
+
+    /************************************************
+     *          Data
+     ************************************************/
+    var yuno_name = "{{yunorole}}";
+    var yuno_role = "{{Yunorole}}";
+    var yuno_version = "1.0.0";
+
+    /*
+     *  TEST Trace Simple Machine
+     *  Set 1 or 2 to see activity machine.
+     *  1: without kw details
+     *  2: with kw details.
+     */
+    var tracing = 0;
+
+    /*
+     *  Trace inter-events or gobjs creation
+     */
+    var trace_inter_event = false;
+    var trace_creation = false;
+
+
+    /************************************************
+     *          Startup code
+     ************************************************/
+    /*
+     *  Create the __yuno__ gobj, the grandfather.
+     */
+    var kw = {
+        tracing: tracing,
+        trace_inter_event: trace_inter_event,
+        trace_creation: trace_creation
+    };
+    trace_msg("CREATING __yuno__");
+    var __yuno__ = new Yuno(
+        yuno_name,
+        yuno_role,
+        yuno_version,
+        kw
+    );
+
+    window.onload = function() {
+        /*
+         *  Create __default_service__
+         */
+        trace_msg("CREATING __default_service__: {{rootname}}");
+        __yuno__.__default_service__ = __yuno__.gobj_create(
+           '{{rootname}}',
+           {{Rootname}},
+           {
+           },
+           __yuno__
+        );
+        __yuno__.gobj_start_tree();
+    };
+
+    /*
+     *  TEST Set true if you want a log viewer in browser window
+     */
+    if(0) {
+        exports._logger = function(msg) { // Set new logger
+           $('#_logger').append('<div>' + msg + '</div>');
+        };
+        trace_msg("onload() done");
+    }
+
+    /************************************************
+     *          Expose to the global object
+     ************************************************/
+    exports.__yuno__ = __yuno__;
+
+})(this);
+

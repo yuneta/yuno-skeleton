@@ -1,0 +1,149 @@
+/***********************************************************************
+ *          {{rootname}}.js
+ *
+ *          {{description}}
+ *
+ *          Copyright (c) {{__year__}} {{author}}.
+ *          All Rights Reserved.
+ ***********************************************************************/
+(function (exports) {
+    'use strict';
+
+    /********************************************
+     *      Configuration (C attributes)
+     ********************************************/
+    var CONFIG = {
+        timeout_retry: 5,               // timeout retry, in seconds
+        timeout_idle: 5                 // idle timeout, in seconds
+    };
+
+
+
+
+            /***************************
+             *      Local Methods
+             ***************************/
+
+
+
+
+    /********************************************
+     *
+     ********************************************/
+    function sample_local(self)
+    {
+    }
+
+
+
+
+            /***************************
+             *      Actions
+             ***************************/
+
+
+
+
+    /********************************************
+     *
+     ********************************************/
+    function ac_timeout(self, event, kw, src)
+    {
+        trace_msg("ac_timeout");
+        //self.set_timeout(1*1000);
+        return 0;
+    }
+
+
+
+
+            /***************************
+             *      GClass/Machine
+             ***************************/
+
+
+
+
+    var FSM = {
+        "event_list": [
+            "EV_TIMEOUT"
+        ],
+        "state_list": [
+            "ST_IDLE"
+        ],
+        "machine": {
+            "ST_IDLE":
+            [
+                ["EV_TIMEOUT",              ac_timeout,             undefined]
+            ]
+        }
+    };
+
+    var {{Rootname}} = GObj.__makeSubclass__();
+    var proto = {{Rootname}}.prototype; // Easy access to the prototype
+    proto.__init__= function(name, kw) {
+        GObj.prototype.__init__.call(
+            this,
+            FSM,
+            CONFIG,
+            name,
+            "{{Rootname}}",
+            kw,
+            0
+        );
+        return this;
+    };
+    gobj_register_gclass({{Rootname}}, "{{Rootname}}");
+
+
+
+
+            /***************************
+             *      Framework Methods
+             ***************************/
+
+
+
+
+    /************************************************
+     *      Framework Method create
+     ************************************************/
+    proto.mt_create = function(kw)
+    {
+    }
+
+    /************************************************
+     *      Framework Method destroy
+     *      In this point, all childs
+     *      and subscriptions are already deleted.
+     ************************************************/
+    proto.mt_destroy = function()
+    {
+    }
+
+    /************************************************
+     *      Framework Method start
+     ************************************************/
+    proto.mt_start = function(kw)
+    {
+        var self = this;
+        self.set_timeout(1*1000);
+    }
+
+    /************************************************
+     *      Framework Method stop
+     ************************************************/
+    proto.mt_stop = function(kw)
+    {
+        var self = this;
+        self.clear_timeout();
+    }
+
+
+    //=======================================================================
+    //      Expose the class via the global object
+    //=======================================================================
+    exports.{{Rootname}} = {{Rootname}};
+
+})(this);
+
