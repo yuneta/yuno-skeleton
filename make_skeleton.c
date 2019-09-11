@@ -144,7 +144,7 @@ PRIVATE int _walk_tree(
  *  Walk directory tree
  *  Se matchea un único pattern a todo lo encontrado.
  ****************************************************************************/
-PUBLIC int walk_dir_tree(
+PRIVATE int mywalk_dir_tree(
     const char *root_dir,
     const char *pattern,
     wd_option opt,
@@ -393,7 +393,7 @@ json_t *find_skeleton(
             find_sk.file = file;
             find_sk.skeleton = skeleton;
             find_sk.jn_config = 0;
-            walk_dir_tree(base, ".*", WD_MATCH_DIRECTORY, find_skeletons_cb, (void *)&find_sk);
+            mywalk_dir_tree(base, ".*", WD_MATCH_DIRECTORY, find_skeletons_cb, (void *)&find_sk);
 
             return find_sk.jn_config;
 
@@ -470,7 +470,7 @@ int list_skeletons(const char* base, const char *file)
     snprintf(path, sizeof(path), "%s/%s", base, file);
     if(access(path, 0)!=0) {
         if(access(base, 0)== 0) {
-            return walk_dir_tree(base, ".*", WD_MATCH_DIRECTORY, list_skeletons_cb, (void *)file);
+            return mywalk_dir_tree(base, ".*", WD_MATCH_DIRECTORY, list_skeletons_cb, (void *)file);
         } else {
             fprintf(stderr, "Cannot find %s file\n", path);
             exit(-1);
