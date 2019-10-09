@@ -339,7 +339,7 @@ json_t *input_vars_values(const char *type, json_t *jn_vars, int testing)
 PRIVATE BOOL find_skeletons_cb(
     void *user_data,
     wd_found_type type,
-    const char *fullpath,
+    char *fullpath,
     const char *directory,
     char *name,             // dname[255]
     int level,
@@ -441,7 +441,7 @@ json_t *find_skeleton(
 PRIVATE BOOL list_skeletons_cb(
     void *user_data,
     wd_found_type type,
-    const char *fullpath,
+    char *fullpath,
     const char *directory,
     char *name,             // dname[255]
     int level,
