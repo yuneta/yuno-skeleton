@@ -13,8 +13,7 @@
      *      Configuration (C attributes)
      ********************************************/
     var CONFIG = {
-        timeout_retry: 5,               // timeout retry, in seconds
-        timeout_idle: 5                 // idle timeout, in seconds
+        timeout: 5                 // timeout, in seconds
     };
 
 
@@ -50,7 +49,7 @@
     function ac_timeout(self, event, kw, src)
     {
         trace_msg("ac_timeout");
-        //self.set_timeout(1*1000);
+        //self.set_timeout(self.config.timeout * 1000);
         return 0;
     }
 
@@ -127,7 +126,7 @@
     proto.mt_start = function(kw)
     {
         var self = this;
-        self.set_timeout(1*1000);
+        self.set_timeout(self.config.timeout * 1000);
     }
 
     /************************************************

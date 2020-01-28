@@ -1,8 +1,7 @@
 /***********************************************************************
- *          Main yuno __yuno__
+ *          __yuno__.js
  *
- *          Create the Yuno __yuno__
- *          Create the default service __default_service__
+ *          Root gobj __yuno__
  *
  *          Copyright (c) {{__year__}} {{author}}.
  *          All Rights Reserved.
@@ -24,6 +23,7 @@
      *  2: with kw details.
      */
     var tracing = 0;
+    var trace_timer = 0;
 
     /*
      *  Trace inter-events or gobjs creation
@@ -40,8 +40,10 @@
      */
     var kw = {
         tracing: tracing,
+        trace_timer: trace_timer,
         trace_inter_event: trace_inter_event,
-        trace_creation: trace_creation
+        trace_creation: trace_creation,
+        trace_ievent_callback: null
     };
     trace_msg("CREATING __yuno__");
     var __yuno__ = new Yuno(
@@ -52,6 +54,11 @@
     );
 
     window.onload = function() {
+        /*
+         *  Delete message waiting
+         */
+        //$('#loading-message').remove();
+
         /*
          *  Create __default_service__
          */
@@ -65,16 +72,6 @@
         );
         __yuno__.gobj_start_tree();
     };
-
-    /*
-     *  TEST Set true if you want a log viewer in browser window
-     */
-    if(0) {
-        exports._logger = function(msg) { // Set new logger
-           $('#_logger').append('<div>' + msg + '</div>');
-        };
-        trace_msg("onload() done");
-    }
 
     /************************************************
      *          Expose to the global object
