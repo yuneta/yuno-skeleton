@@ -34,13 +34,13 @@ PRIVATE int mt_start(hgobj gobj)
 {
     GCLASS *gclass =  gobj_gclass(gobj);
 
-    gclass->base->gmt.mt_start(gobj);
+    int ret = gclass->base->gmt.mt_start(gobj);
 
     /*
      *  HACK Start here the services or gobjs with no autostart
      */
 
-    return 0;
+    return ret;
 }
 
 /***************************************************************************
@@ -52,8 +52,7 @@ PRIVATE int mt_stop(hgobj gobj)
 
     gobj_stop_services();
 
-    gclass->base->gmt.mt_stop(gobj);
-    return 0;
+    return gclass->base->gmt.mt_stop(gobj);
 }
 
 /***************************************************************************
@@ -66,9 +65,7 @@ PRIVATE int mt_play(hgobj gobj)
      *
      *  Organize the gobj's play as you want.
      */
-    gobj_play(gobj_default_service());
-
-    return 0;
+    return gobj_play(gobj_default_service());
 }
 
 /***************************************************************************
@@ -81,9 +78,7 @@ PRIVATE int mt_pause(hgobj gobj)
      *
      *  Organize the gobj's pause as you want.
      */
-    gobj_pause(gobj_default_service());
-
-    return 0;
+    return gobj_pause(gobj_default_service());
 }
 
 /***************************************************************************
