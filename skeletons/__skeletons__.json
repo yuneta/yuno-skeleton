@@ -150,7 +150,7 @@
     },
     {
         "name": "js_yuno",
-        "summary": "Create a javascript yuno",
+        "summary": "Create a js Yuneta yuno",
         "type": "Yuno",
         "vars": [
             {
@@ -182,7 +182,7 @@
     },
     {
         "name": "js_gclass",
-        "summary": "Create a javascript gclass",
+        "summary": "Create a js Yuneta gclass",
         "type": "GClass",
         "vars": [
             {
