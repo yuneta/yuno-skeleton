@@ -540,11 +540,22 @@ int make_skeleton(const char* base, const char* file, const char* skeleton)
 
     json_t *jn_vars = json_object_get(jn_skeleton, "vars");
     const char *type = json_string_value(json_object_get(jn_skeleton, "type"));
-    json_t *jn_values = input_vars_values(type, jn_vars, 0);
+//    json_t *jn_values = input_vars_values(type, jn_vars, 0);
 
-//     fprintf(stdout, "\n");
-//     json_dumpf(jn_values, stdout, JSON_INDENT(4));
-//     fprintf(stdout, "\n");
+json_t *jn_values = json_pack("{s:s,s:s,s:s,s:s,s:s,s:s,s:s,s:s,s:s,s:s,s:s,s:s}",
+    "__year__", "2020",
+    "yunorole", "fichador",
+    "Yunorole", "Fichador",
+    "YUNOROLE", "FICHADOR",
+    "rootname", "fichador",
+    "Rootname", "Fichador",
+    "ROOTNAME", "FICHADOR",
+    "version", "1.0.0",
+    "description", "",
+    "author", "",
+    "author_email", "",
+    "license_name", ""
+);
 
     char dst_dir[80] = ".";
     if(strcasecmp(type, "yuno")==0) {

@@ -20,9 +20,48 @@
 #include <stddef.h>
 #include <pcre.h>
 #include <errno.h>
+#include <fcntl.h>
+#if defined(__APPLE__) || defined(__FreeBSD__)
+  #include <copyfile.h>
+#elif defined(__linux__)
+  #include <sys/sendfile.h>
+#endif
+#include <dirent.h>
 #include <jansson.h>
 #include <00_replace_string.h>
 #include "tmpl_dir.h"
+
+#define Color_Off "\033[0m"       // Text Reset
+
+// Regular Colors
+#define Black "\033[0;30m"        // Black
+#define Red "\033[0;31m"          // Red
+#define Green "\033[0;32m"        // Green
+#define Yellow "\033[0;33m"       // Yellow
+#define Blue "\033[0;34m"         // Blue
+#define Purple "\033[0;35m"       // Purple
+#define Cyan "\033[0;36m"         // Cyan
+#define White "\033[0;37m"        // White
+
+// Bold
+#define BBlack "\033[1;30m"       // Black
+#define BRed "\033[1;31m"         // Red
+#define BGreen "\033[1;32m"       // Green
+#define BYellow "\033[1;33m"      // Yellow
+#define BBlue "\033[1;34m"        // Blue
+#define BPurple "\033[1;35m"      // Purple
+#define BCyan "\033[1;36m"        // Cyan
+#define BWhite "\033[1;37m"       // White
+
+// Background
+#define On_Black "\033[40m"       // Black
+#define On_Red "\033[41m"         // Red
+#define On_Green "\033[42m"       // Green
+#define On_Yellow "\033[43m"      // Yellow
+#define On_Blue "\033[44m"        // Blue
+#define On_Purple "\033[45m"      // Purple
+#define On_Cyan "\033[46m"        // Cyan
+#define On_White "\033[47m"       // White
 
 /***************************************************************************
  *      Constants
@@ -199,6 +238,124 @@ int is_directory(const char *path)
 }
 
 /***************************************************************************
+ *
+ ***************************************************************************/
+int is_link(const char *path)
+{
+    struct stat path_stat;
+    lstat(path, &path_stat);
+    return S_ISLNK(path_stat.st_mode);
+}
+
+/***************************************************************************
+ *  Create a new file (only to write)
+ *  The use of this functions implies the use of 00_security.h's permission system:
+ *  umask will be set to 0 and we control all permission mode.
+ ***************************************************************************/
+static int umask_cleared = 0;
+int newfile(const char *path, int permission, int overwrite)
+{
+    int flags = O_CREAT|O_WRONLY|O_LARGEFILE;
+
+    if(!umask_cleared) {
+        umask(0);
+        umask_cleared = 1;
+    }
+
+    if(overwrite)
+        flags |= O_TRUNC;
+    else
+        flags |= O_EXCL;
+    return open(path, flags, permission);
+}
+
+/***************************************************************************
+ *
+ ***************************************************************************/
+int copy_link(
+    const char* source,
+    const char* destination
+)
+{
+    char bf[PATH_MAX] = {0};
+    if(readlink(source, bf, sizeof(bf))<0) {
+        printf("%sERROR reading %s link%s\n\n", On_Red BWhite, source, Color_Off);
+        return -1;
+    }
+    if(symlink(bf, destination)<0) {
+        printf("%sERROR %d Cannot create symlink %s -> %s%s\n\n",
+            On_Red BWhite, errno, destination, bf, Color_Off);
+        return -1;
+    }
+    return 0;
+}
+
+/***************************************************************************
+ *  Copy file in kernel mode.
+ *  http://stackoverflow.com/questions/2180079/how-can-i-copy-a-file-on-unix-using-c
+ ***************************************************************************/
+int copyfile(
+    const char* source,
+    const char* destination,
+    int permission,
+    int overwrite)
+{
+    int input, output;
+    if ((input = open(source, O_RDONLY)) == -1) {
+        return -1;
+    }
+    if ((output = newfile(destination, permission, overwrite)) == -1) {
+        // error already logged
+        close(input);
+        return -1;
+    }
+
+    //Here we use kernel-space copying for performance reasons
+#if defined(__APPLE__) || defined(__FreeBSD__)
+    //fcopyfile works on FreeBSD and OS X 10.5+
+    int result = fcopyfile(input, output, 0, COPYFILE_ALL);
+#elif defined(__linux__)
+    //sendfile will work with non-socket output (i.e. regular file) on Linux 2.6.33+
+    off_t bytesCopied = 0;
+    struct stat fileinfo = {0};
+    fstat(input, &fileinfo);
+    int result = sendfile(output, input, &bytesCopied, fileinfo.st_size);
+#else
+    ssize_t nread;
+    int result = 0;
+    int error = 0;
+    char buf[4096];
+
+    while (nread = read(input, buf, sizeof buf), nread > 0 && !error) {
+        char *out_ptr = buf;
+        ssize_t nwritten;
+
+        do {
+            nwritten = write(output, out_ptr, nread);
+
+            if (nwritten >= 0)
+            {
+                nread -= nwritten;
+                out_ptr += nwritten;
+            }
+            else if (errno != EINTR)
+            {
+                error = 1;
+                result = -1;
+                break;
+            }
+        } while (nread > 0);
+    }
+
+#endif
+
+    close(input);
+    close(output);
+
+    return result;
+}
+
+/***************************************************************************
  *  Copy recursively the directory src to dst directory,
  *  rendering {{ }} of names of files and directories, and the content of the files,
  *  substituting by the value of jn_values
@@ -251,13 +408,24 @@ int copy_dir(const char *dst, const char *src, json_t *jn_values)
         len = snprintf(dst_path, sizeof(dst_path)-1, "%s/%s", dst, rendered_str);
         dst_path[len] = 0;
 
-        if (is_directory(src_path)) {
+
+        if (is_link(src_path)) {
+            copy_link(src_path, dst_path);
+
+        } else if (is_directory(src_path)) {
             if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0) {
                 continue;
             }
             copy_dir(dst_path, src_path, jn_values);
-        } if (is_regular_file(src_path)) {
-            render_file(dst_path, src_path, jn_values);
+        } else if (is_regular_file(src_path)) {
+            if(strstr(src_path, "_tmpl")) {
+                render_file(dst_path, src_path, jn_values);
+            } else {
+                struct stat path_stat;
+                stat(src_path, &path_stat);
+
+                copyfile(src_path, dst_path, path_stat.st_mode, 1);
+            }
         }
 
     } while ((entry = readdir(src_dir)));
