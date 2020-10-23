@@ -65,24 +65,7 @@
     },
     {
         "name": "gclass_service",
-        "summary": "Create a servicer gclass with timer (output events must be subscribed)",
-        "type": "GClass",
-        "vars": [
-            {
-                "var": "description",
-                "message": "One-line description of the gclass",
-                "default": ""
-            },
-            {
-                "var": "author",
-                "message": "Author name",
-                "default": ""
-            }
-        ]
-    },
-    {
-        "name": "gclass_service_rc",
-        "summary": "Create a servicer gclass with resource methods",
+        "summary": "Create a service gclass with timer (output events must be subscribed)",
         "type": "GClass",
         "vars": [
             {
