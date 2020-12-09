@@ -67,6 +67,16 @@ PRIVATE const trace_level_t s_user_trace_level[16] = {
 {0, 0},
 };
 
+/*---------------------------------------------*
+ *      GClass permission levels
+ *---------------------------------------------*/
+enum {
+    PERMISSION_XXXX = 0x00000001,
+};
+PRIVATE const permission_level_t s_user_permission_level[32] = {
+{"xxxx",        "Sample"},
+{0, 0},
+};
 
 /*---------------------------------------------*
  *              Private data
@@ -363,7 +373,7 @@ PRIVATE GCLASS _gclass = {
     lmt,
     tattr_desc,
     sizeof(PRIVATE_DATA),
-    0,  // acl
+    s_user_permission_level,  // acl
     s_user_trace_level,
     command_table,  // command_table
     0,  // gcflag

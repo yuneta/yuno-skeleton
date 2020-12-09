@@ -18,7 +18,7 @@
  *      Constants
  ***************************************************************************/
 #define NAME            "yuno-skeleton"
-#define APP_VERSION     "4.2.26"
+#define APP_VERSION     "4.2.27"
 #define APP_DATETIME    __DATE__ " " __TIME__
 #define APP_SUPPORT     "<niyamaka at yuneta.io>"
 #define DEFAULT_SKELETON_PATH "/yuneta/development/bin/skeletons"
