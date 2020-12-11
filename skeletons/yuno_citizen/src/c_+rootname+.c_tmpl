@@ -58,6 +58,9 @@ SDATA_END()
 
 /*---------------------------------------------*
  *      GClass trace levels
+ *  HACK strict ascendent value!
+ *  required paired correlative strings
+ *  in s_user_trace_level
  *---------------------------------------------*/
 enum {
     TRACE_MESSAGES = 0x0001,
@@ -68,14 +71,18 @@ PRIVATE const trace_level_t s_user_trace_level[16] = {
 };
 
 /*---------------------------------------------*
- *      GClass permission levels
+ *      GClass authz levels
  *---------------------------------------------*/
-enum {
-    PERMISSION_XXXX = 0x00000001,
+PRIVATE sdata_desc_t pm_authz_sample[] = {
+/*-PM----type-----------name------------flag------------default-----description---------- */
+SDATAPM (ASN_OCTET_STR, "param",        0,              0,          "Param ..."),
+SDATA_END()
 };
-PRIVATE const permission_level_t s_user_permission_level[32] = {
-{"xxxx",        "Sample"},
-{0, 0},
+
+PRIVATE sdata_desc_t authz_table[] = {
+/*-AUTHZ-- type---------name------------flag----alias---items---------------description--*/
+SDATAAUTHZ (ASN_SCHEMA, "sample",       0,      0,      pm_authz_sample,    "Permission to ..."),
+SDATA_END()
 };
 
 /*---------------------------------------------*
@@ -328,7 +335,7 @@ PRIVATE GCLASS _gclass = {
         0, //mt_add_child_resource_link
         0, //mt_delete_child_resource_link
         0, //mt_get_resource
-        0, //mt_future24,
+        0, //mt_authorization_parser,
         0, //mt_authenticate,
         0, //mt_list_childs,
         0, //mt_stats_updated,
@@ -337,8 +344,8 @@ PRIVATE GCLASS _gclass = {
         0, //mt_trace_on,
         0, //mt_trace_off,
         0, //mt_gobj_created,
-        0, //mt_permission_on,
-        0, //mt_permission_off,
+        0, //mt_authz_allow,
+        0, //mt_authz_deny,
         0, //mt_publish_event,
         0, //mt_publication_pre_filter,
         0, //mt_publication_filter,
@@ -373,7 +380,7 @@ PRIVATE GCLASS _gclass = {
     lmt,
     tattr_desc,
     sizeof(PRIVATE_DATA),
-    s_user_permission_level,  // acl
+    authz_table,
     s_user_trace_level,
     command_table,  // command_table
     0,  // gcflag
