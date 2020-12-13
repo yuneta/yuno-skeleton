@@ -244,6 +244,7 @@ PRIVATE const EVENT input_events[] = {
     {"EV_SAMPLE",       0,  0,  "Description of resource"},
     // bottom input
     {"EV_TIMEOUT",      0,  0,  ""},
+    {"EV_STOPPED",      0,  0,  ""},
     // internal
     {NULL, 0, 0, ""}
 };
@@ -260,6 +261,7 @@ PRIVATE const char *state_names[] = {
 PRIVATE EV_ACTION ST_IDLE[] = {
     {"EV_SAMPLE",               ac_sample,              0},
     {"EV_TIMEOUT",              ac_timeout,             0},
+    {"EV_STOPPED",              0,                      0},
     {0,0,0}
 };
 
