@@ -8,7 +8,6 @@
  *          All Rights Reserved.
  ****************************************************************************/
 #include <yuneta_tls.h>
-#include <yuneta.h>
 #include "c_{{rootname}}.h"
 #include "yuno_{{yunorole}}.h"
 
@@ -148,13 +147,16 @@ int main(int argc, char *argv[])
      *------------------------------------------------*/
     helper_quote2doublequote(fixed_config);
     helper_quote2doublequote(variable_config);
-    yuneta_set_gobj_startup_functions(
-        db_load_persistent_attrs,   // dbsimple.c
-        db_save_persistent_attrs,   // dbsimple.c
-        db_remove_persistent_attrs, // dbsimple.c
-        db_list_persistent_attrs,   // dbsimple.
-        command_parser,             // command_parser.c
-        stats_parser                // stats_parser.c
+    yuneta_setup(
+        treedb_load_persistent_attrs,
+        treedb_save_persistent_attrs,
+        treedb_remove_persistent_attrs,
+        treedb_list_persistent_attrs,
+        command_parser,
+        stats_parser,
+        authz_checker,
+        authz_allow,
+        authz_deny
     );
     return yuneta_entry_point(
         argc, argv,
