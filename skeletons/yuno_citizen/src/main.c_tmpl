@@ -150,7 +150,6 @@ int main(int argc, char *argv[])
         command_parser,
         stats_parser,
         0,
-        0,
         0
     );
     return yuneta_entry_point(
