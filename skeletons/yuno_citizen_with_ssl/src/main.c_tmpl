@@ -148,16 +148,16 @@ int main(int argc, char *argv[])
     helper_quote2doublequote(fixed_config);
     helper_quote2doublequote(variable_config);
     yuneta_setup(
-        dbattrs_startup,
-        dbattrs_end,
-        dbattrs_load_persistent,
-        dbattrs_save_persistent,
-        dbattrs_remove_persistent,
-        dbattrs_list_persistent,
+        dbattrs_startup,            // dbsimple2
+        dbattrs_end,                // dbsimple2
+        dbattrs_load_persistent,    // dbsimple2
+        dbattrs_save_persistent,    // dbsimple2
+        dbattrs_remove_persistent,  // dbsimple2
+        dbattrs_list_persistent,    // dbsimple2
         command_parser,
         stats_parser,
-        authz_checker,
-        authzs_list
+        authz_checker,              // Monoclass Authz
+        authenticate_parser         // Monoclass Authz
     );
     return yuneta_entry_point(
         argc, argv,
