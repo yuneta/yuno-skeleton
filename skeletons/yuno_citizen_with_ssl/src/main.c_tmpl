@@ -28,7 +28,7 @@ PRIVATE char fixed_config[]= "\
 {                                                                   \n\
     'yuno': {                                                       \n\
         'yuno_role': '"ROLE_{{YUNOROLE}}"',                         \n\
-        'classifiers': ['realm', 'app']                             \n\
+        'tags': ['app', 'secure']                                   \n\
     }                                                               \n\
 }                                                                   \n\
 ";

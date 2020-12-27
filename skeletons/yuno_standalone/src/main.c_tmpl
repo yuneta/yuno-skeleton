@@ -63,7 +63,7 @@ PRIVATE char fixed_config[]= "\
 {                                                                   \n\
     'yuno': {                                                       \n\
         'yuno_role': '"ROLE_{{YUNOROLE}}"',                         \n\
-        'classifiers': ['yuneta', 'utility']                        \n\
+        'tags': ['app', 'utils']                                    \n\
     }                                                               \n\
 }                                                                   \n\
 ";
