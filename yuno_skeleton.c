@@ -86,7 +86,7 @@ static error_t parse_opt (int key, char *arg, struct argp_state *state)
         arguments->list_skeletons = 1;
         break;
 
-    case 'o':
+    case 'p':
         arguments->path = arg;
         break;
 
