@@ -33,7 +33,7 @@
  *---------------------------------------------*/
 PRIVATE sdata_desc_t tattr_desc[] = {
 /*-ATTR-type------------name----------------flag------------------------default---------description---------- */
-SDATA (ASN_INTEGER,     "timeout",          SDF_RD,                     2*1000,         "Timeout"),
+SDATA (ASN_INTEGER,     "timeout",          SDF_RD,                     1*1000,         "Timeout"),
 SDATA (ASN_POINTER,     "user_data",        0,                          0,              "user data"),
 SDATA (ASN_POINTER,     "user_data2",       0,                          0,              "more user data"),
 SDATA_END()
@@ -58,7 +58,6 @@ PRIVATE const trace_level_t s_user_trace_level[16] = {
  *---------------------------------------------*/
 typedef struct _PRIVATE_DATA {
     int32_t timeout;
-
     hgobj timer;
 } PRIVATE_DATA;
 

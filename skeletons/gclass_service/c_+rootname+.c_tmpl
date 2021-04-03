@@ -57,7 +57,7 @@ SDATA_END()
  *---------------------------------------------*/
 PRIVATE sdata_desc_t tattr_desc[] = {
 /*-ATTR-type------------name----------------flag------------------------default---------description---------- */
-SDATA (ASN_INTEGER,     "timeout",          SDF_RD,                     2*1000,         "Timeout"),
+SDATA (ASN_INTEGER,     "timeout",          SDF_RD,                     1*1000,         "Timeout"),
 SDATA (ASN_POINTER,     "user_data",        0,                          0,              "user data"),
 SDATA (ASN_POINTER,     "user_data2",       0,                          0,              "more user data"),
 SDATA (ASN_POINTER,     "subscriber",       0,                          0,              "subscriber of output-events. Not a child gobj."),
@@ -98,7 +98,6 @@ SDATA_END()
  *---------------------------------------------*/
 typedef struct _PRIVATE_DATA {
     int32_t timeout;
-
     hgobj timer;
 } PRIVATE_DATA;
 
