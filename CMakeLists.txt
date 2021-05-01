@@ -74,6 +74,9 @@ install(
     DESTINATION ${BIN_DEST_DIR}
 )
 
+
+execute_process(COMMAND rm -rf ${BIN_DEST_DIR}/skeletons)
+
 install(
     DIRECTORY skeletons/
     USE_SOURCE_PERMISSIONS
