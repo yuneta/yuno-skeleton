@@ -1,6 +1,4 @@
-#ifndef _MAKE_SKELETON_H
-#define _MAKE_SKELETON_H 1
-
+#pragma once
 
 #ifdef __cplusplus
 extern "C"{
@@ -24,6 +22,4 @@ int list_skeletons(const char *base, const char *file);
 
 #ifdef __cplusplus
 }
-#endif
-
 #endif
