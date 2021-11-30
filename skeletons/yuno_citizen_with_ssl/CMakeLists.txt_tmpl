@@ -78,6 +78,7 @@ TARGET_LINK_LIBRARIES({{yunorole}}
 
     z rt m
     uuid
+    util
 )
 
 ##############################################
