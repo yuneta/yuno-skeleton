@@ -75,7 +75,7 @@ install(
 )
 
 
-execute_process(COMMAND rm -rf ${BIN_DEST_DIR}/skeletons)
+# execute_process(COMMAND rm -rf ${BIN_DEST_DIR}/skeletons)
 
 install(
     DIRECTORY skeletons/
