@@ -57,7 +57,7 @@
         /*
          *  Delete message waiting
          */
-        //$('#loading-message').remove();
+        //document.getElementById("loading-message").remove();
 
         /*
          *  Create __default_service__
@@ -72,6 +72,11 @@
         );
         __yuno__.gobj_start_tree();
     };
+
+    window.onbeforeunload = function() {
+        var r =__yuno__.gobj_read_attr("changesLost")
+        return r?r:null;
+    }
 
     /************************************************
      *          Expose to the global object
