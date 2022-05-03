@@ -12,7 +12,7 @@
     /********************************************
      *      Configuration (C attributes)
      ********************************************/
-    var CONFIG = {
+    let CONFIG = {
         timeout: 5                 // timeout, in seconds
     };
 
@@ -63,7 +63,7 @@
 
 
 
-    var FSM = {
+    let FSM = {
         "event_list": [
             "EV_TIMEOUT"
         ],
@@ -78,8 +78,8 @@
         }
     };
 
-    var {{Rootname}} = GObj.__makeSubclass__();
-    var proto = {{Rootname}}.prototype; // Easy access to the prototype
+    let {{Rootname}} = GObj.__makeSubclass__();
+    let proto = {{Rootname}}.prototype; // Easy access to the prototype
     proto.__init__= function(name, kw) {
         GObj.prototype.__init__.call(
             this,
@@ -109,6 +109,7 @@
      ************************************************/
     proto.mt_create = function(kw)
     {
+        let self = this;
     }
 
     /************************************************
@@ -125,7 +126,7 @@
      ************************************************/
     proto.mt_start = function(kw)
     {
-        var self = this;
+        let self = this;
         self.set_timeout(self.config.timeout * 1000);
     }
 
@@ -134,7 +135,7 @@
      ************************************************/
     proto.mt_stop = function(kw)
     {
-        var self = this;
+        let self = this;
         self.clear_timeout();
     }
 
@@ -145,4 +146,3 @@
     exports.{{Rootname}} = {{Rootname}};
 
 })(this);
-

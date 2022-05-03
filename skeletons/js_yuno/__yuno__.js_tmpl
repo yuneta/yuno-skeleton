@@ -12,9 +12,9 @@
     /************************************************
      *          Data
      ************************************************/
-    var yuno_name = "{{yunorole}}";
-    var yuno_role = "{{Yunorole}}";
-    var yuno_version = "1.0.0";
+    const yuno_name = "{{yunorole}}";
+    const yuno_role = "{{Yunorole}}";
+    const yuno_version = "1.0.0";
 
     /*
      *  TEST Trace Simple Machine
@@ -22,14 +22,14 @@
      *  1: without kw details
      *  2: with kw details.
      */
-    var tracing = 0;
-    var trace_timer = 0;
+    let tracing = 0;
+    let trace_timer = 0;
 
     /*
      *  Trace inter-events or gobjs creation
      */
-    var trace_inter_event = false;
-    var trace_creation = false;
+    let trace_inter_event = false;
+    let trace_creation = false;
 
 
     /************************************************
@@ -38,7 +38,7 @@
     /*
      *  Create the __yuno__ gobj, the grandfather.
      */
-    var kw = {
+    let kw = {
         tracing: tracing,
         trace_timer: trace_timer,
         trace_inter_event: trace_inter_event,
@@ -46,7 +46,7 @@
         trace_ievent_callback: null
     };
     trace_msg("CREATING __yuno__");
-    var __yuno__ = new Yuno(
+    let __yuno__ = new Yuno(
         yuno_name,
         yuno_role,
         yuno_version,
@@ -74,7 +74,7 @@
     };
 
     window.onbeforeunload = function() {
-        var r =__yuno__.gobj_read_attr("changesLost")
+        let r =__yuno__.gobj_read_attr("changesLost")
         return r?r:null;
     }
 
@@ -84,4 +84,3 @@
     exports.__yuno__ = __yuno__;
 
 })(this);
-
