@@ -13,8 +13,10 @@
      *      Configuration (C attributes)
      ********************************************/
     let CONFIG = {
-        timeout_retry: 5,               // timeout retry, in seconds
-        timeout_idle: 5                 // idle timeout, in seconds
+        subscriber: null,       // subscriber of publishing messages
+
+        timeout_retry: 5,       // timeout retry, in seconds
+        timeout_idle: 5         // idle timeout, in seconds
     };
 
 
@@ -111,6 +113,16 @@
     proto.mt_create = function(kw)
     {
         let self = this;
+
+        /*
+         *  Child model
+         */
+        if(!self.config.subscriber) {
+            self.config.subscriber = self.gobj_parent();  // Remove if not child model
+        }
+        if(self.config.subscriber) {
+            self.gobj_subscribe_event(null, {}, self.config.subscriber);
+        }
     }
 
     /************************************************
