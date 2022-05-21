@@ -10,13 +10,20 @@
     'use strict';
 
     /********************************************
-     *      Configuration (C attributes)
+     *  Configuration (C attributes)
+     *  Attributes without underscore prefix
+     *      will be set in self.config
+     *  Attributes with underscore ("_") prefix:
+     *      will be set in self.private
      ********************************************/
     let CONFIG = {
+        //////////////// Public Attributes //////////////////
         subscriber: null,       // subscriber of publishing messages
 
         timeout_retry: 5,       // timeout retry, in seconds
         timeout_idle: 5         // idle timeout, in seconds
+
+        //////////////// Private Attributes /////////////////
     };
 
 

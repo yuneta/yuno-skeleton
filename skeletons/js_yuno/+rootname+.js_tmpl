@@ -10,10 +10,17 @@
     'use strict';
 
     /********************************************
-     *      Configuration (C attributes)
+     *  Configuration (C attributes)
+     *  Attributes without underscore prefix
+     *      will be set in self.config
+     *  Attributes with underscore ("_") prefix:
+     *      will be set in self.private
      ********************************************/
     let CONFIG = {
+        //////////////// Public Attributes //////////////////
         timeout: 5                 // timeout, in seconds
+
+        //////////////// Private Attributes /////////////////
     };
 
 
