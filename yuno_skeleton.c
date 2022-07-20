@@ -9,7 +9,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <argp.h>
-#include <regex.h>
+#include <pcre2posix.h>
 #include <jansson.h>
 #include <yuneta.h>
 #include "make_skeleton.h"
