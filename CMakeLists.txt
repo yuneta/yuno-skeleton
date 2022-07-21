@@ -43,7 +43,7 @@ SET (YUNO_SRCS
     yuno_skeleton.c
     make_skeleton.c
     tmpl_dir.c
-    /yuneta/development/yuneta/^gobj-ecosistema/ghelpers/src/00_replace_string.c
+    00_replace_string.c
 )
 SET (YUNO_HDRS
 )
@@ -82,4 +82,3 @@ install(
     USE_SOURCE_PERMISSIONS
     DESTINATION ${BIN_DEST_DIR}/skeletons
 )
-
