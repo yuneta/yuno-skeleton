@@ -5,7 +5,6 @@
  *          Copyright (c) 2015 Niyamaka.
  *          All Rights Reserved.
  ****************************************************************************/
-#include <sys/types.h>
 #include <dirent.h>
 #include <time.h>
 #include <sys/stat.h>
@@ -594,4 +593,3 @@ int make_skeleton(const char* base, const char* file, const char* skeleton)
 
     return 0;
 }
-
