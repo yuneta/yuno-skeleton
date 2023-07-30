@@ -1,8 +1,8 @@
 ##############################################
 #   CMake
 ##############################################
-project(yuno-skeleton C)
 cmake_minimum_required(VERSION 3.0)
+project(yuno-skeleton C)
 include(CheckIncludeFiles)
 include(CheckSymbolExists)
 
