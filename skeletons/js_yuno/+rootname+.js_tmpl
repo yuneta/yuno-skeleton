@@ -27,6 +27,30 @@
 
 
                     /***************************
+                     *      Commands
+                     ***************************/
+
+
+
+
+    /********************************************
+     *
+     ********************************************/
+    function cmd_help(self, cmd, kw, src)
+    {
+        let webix = {
+            "result": 0,
+            "comment": "",
+            "schema": null,
+            "data": null
+        };
+        return webix;
+    }
+
+
+
+
+                    /***************************
                      *      Local Methods
                      ***************************/
 
@@ -162,8 +186,19 @@
     proto.mt_command = function(command, kw, src)
     {
         let self = this;
-
-        return {};
+        switch(command) {
+            case "help":
+                return cmd_help(self, command, kw, src);
+            default:
+                log_error("Command not found: %s", command);
+                let webix = {
+                    "result": -1,
+                    "comment": sprintf("Command not found: %s", command),
+                    "schema": null,
+                    "data": null
+                };
+                return webix;
+        }
     };
 
 
