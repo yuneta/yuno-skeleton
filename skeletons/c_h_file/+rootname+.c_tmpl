@@ -3,7 +3,7 @@
  *
  *          {{description}}
  *
- *          Copyright (c) {{__year__}} {{author}}.
+ *          Copyright (c) {{__year__}}, {{author}}.
  *          All Rights Reserved.
 ***********************************************************************/
 #include "{{rootname}}.h"
@@ -31,5 +31,3 @@ PUBLIC int sample(void)
 {
     return 0;
 }
-
-

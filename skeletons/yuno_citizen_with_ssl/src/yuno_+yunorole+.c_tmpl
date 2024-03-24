@@ -2,7 +2,7 @@
  *          YUNO_{{YUNOROLE}}.C
  *          {{Yunoname}} yuno.
  *
- *          Copyright (c) {{__year__}} {{author}}.
+ *          Copyright (c) {{__year__}}, {{author}}.
  *          All Rights Reserved.
  ***********************************************************************/
 #include <string.h>

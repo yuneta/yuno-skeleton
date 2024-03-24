@@ -3,7 +3,7 @@
  *
  *          {{description}}
  *
- *          Copyright (c) {{__year__}} {{author}}.
+ *          Copyright (c) {{__year__}}, {{author}}.
  *          All Rights Reserved.
  ***********************************************************************/
 (function(window, undefined) {
