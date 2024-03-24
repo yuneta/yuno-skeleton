@@ -7,7 +7,7 @@
  *          All Rights Reserved.
  ***********************************************************************/
 (function (exports) {
-    'use strict';
+    "use strict";
 
     /********************************************
      *  Configuration (C attributes)
@@ -157,6 +157,26 @@
     {
         let self = this;
         self.clear_timeout();
+    };
+
+    /************************************************
+     *      Framework Method stats
+     ************************************************/
+    proto.mt_stats = function(stats, kw, src)
+    {
+        let self = this;
+
+        return {};
+    };
+
+    /************************************************
+     *      Framework Method command
+     ************************************************/
+    proto.mt_command = function(command, kw, src)
+    {
+        let self = this;
+
+        return {};
     };
 
 
